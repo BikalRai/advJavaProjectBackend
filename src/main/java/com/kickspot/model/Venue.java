@@ -7,6 +7,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -22,6 +23,8 @@ public class Venue {
 	private String description;
 	private String amenities;
 	private long price;
+	@Lob
+	private byte[] image;
 	
 	@ManyToOne
 	@JoinColumn(name = "user_id")
@@ -103,6 +106,14 @@ public class Venue {
 
 	public void setBookings(List<Booking> bookings) {
 		this.bookings = bookings;
+	}
+
+	public byte[] getImage() {
+		return image;
+	}
+
+	public void setImage(byte[] image) {
+		this.image = image;
 	}
 	
 	
