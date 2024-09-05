@@ -3,10 +3,12 @@ package com.kickspot.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,6 +25,11 @@ public class UserRestController {
 	@Autowired
 	private UserService userService;
 	
+	@PostMapping("/users")
+	public ResponseEntity<String> addUser(@RequestBody UserRequestDTO userReqDTO) {
+		return userService.addUser(userReqDTO);
+	}
+	
 	@GetMapping("/users")
 	public ResponseEntity<List<UserResponseDTO>> getAllUsers() {
 		return userService.getAllUsers();
@@ -33,8 +40,8 @@ public class UserRestController {
 		return userService.getUserById(id);
 	}
 	
-	@PutMapping("/updateUSer")
-	public ResponseEntity<String> updateUser(@RequestParam("id") int id, @RequestBody UserRequestDTO userReqDTO) {
+	@PutMapping("/updateUser/{id}")
+	public ResponseEntity<String> updateUser(@PathVariable("id") int id, @RequestBody UserRequestDTO userReqDTO) {
 		return userService.updateUser(id, userReqDTO);
 	}
 	

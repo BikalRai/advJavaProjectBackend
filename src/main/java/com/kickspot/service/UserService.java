@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.kickspot.dto.UserRequestDTO;
@@ -19,7 +20,8 @@ public class UserService {
 	@Autowired
 	private UserRepository userRepo;
 	
-
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	
 	public ResponseEntity<String> addUser(UserRequestDTO userReqDTO) {
 		if(userRepo.existsByEmail(userReqDTO.getEmail())) {
@@ -35,7 +37,7 @@ public class UserService {
 		user.setLastName(userReqDTO.getLastName());
 		user.setEmail(userReqDTO.getEmail());
 		user.setMobile(userReqDTO.getMobile());
-		user.setPassword(userReqDTO.getPassword());
+		user.setPassword(passwordEncoder.encode(userReqDTO.getPassword()));
 		
 		userRepo.save(user);
 		
@@ -74,6 +76,10 @@ public class UserService {
 		user.setLastName(userReqDTO.getLastName());
 		user.setEmail(userReqDTO.getEmail());
 		user.setMobile(userReqDTO.getMobile());
+		
+		if(!(userReqDTO.getPassword() == null) && !userReqDTO.getPassword().isEmpty()) {
+			user.setPassword(passwordEncoder.encode(userReqDTO.getPassword()));
+		}
 		
 		userRepo.save(user);
 		
