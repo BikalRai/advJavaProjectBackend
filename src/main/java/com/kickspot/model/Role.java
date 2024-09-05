@@ -7,13 +7,15 @@ import jakarta.persistence.Id;
 
 @Entity
 public class Role {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private String name;
-	
-	
+
+	public Role() {
+	}
+
 	public Role(String name) {
 		this.name = name;
 	}
@@ -34,7 +36,4 @@ public class Role {
 		this.name = name;
 	}
 
-	
-	
-	
 }

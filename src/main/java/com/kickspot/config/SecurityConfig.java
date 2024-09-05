@@ -2,6 +2,7 @@ package com.kickspot.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -15,13 +16,15 @@ public class SecurityConfig{
 	
 	@Bean
 	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		http.
-			csrf(csrf -> csrf.disable())
+		http
+			.csrf(csrf -> csrf.disable())
 			.authorizeHttpRequests(requests -> requests
-						.requestMatchers("/**").permitAll()
-						.anyRequest()
-						.authenticated())
-			;
+					.requestMatchers(HttpMethod.POST, "/users").permitAll()
+					.requestMatchers("/api/services/**").permitAll()
+					.requestMatchers(HttpMethod.GET, "/**").hasAnyRole("USER", "ADMIN", "OWNER")
+					.anyRequest()
+					.authenticated()
+			);
 		
 		return http.build();
 	}

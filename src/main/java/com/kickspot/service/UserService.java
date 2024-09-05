@@ -1,5 +1,6 @@
 package com.kickspot.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.kickspot.dto.UserRequestDTO;
 import com.kickspot.dto.UserResponseDTO;
+import com.kickspot.model.Role;
 import com.kickspot.model.User;
 import com.kickspot.repository.UserRepository;
 
@@ -22,6 +24,9 @@ public class UserService {
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+	
+	@Autowired
+	private RoleService roleService;
 	
 	public ResponseEntity<String> addUser(UserRequestDTO userReqDTO) {
 		if(userRepo.existsByEmail(userReqDTO.getEmail())) {
@@ -38,6 +43,19 @@ public class UserService {
 		user.setEmail(userReqDTO.getEmail());
 		user.setMobile(userReqDTO.getMobile());
 		user.setPassword(passwordEncoder.encode(userReqDTO.getPassword()));
+		
+		List<Role> roles = new ArrayList<>();
+		
+		if(userReqDTO.getRoleIds() != null &&  !userReqDTO.getRoleIds().isEmpty() ) {
+			roles = roleService.getAllRolesById(userReqDTO.getRoleIds());
+		}
+		
+		if(roles.isEmpty()) {
+			Role defaultRole = roleService.getRoleByName("ROLE_USER");
+			roles.add(defaultRole);
+		}
+		
+		user.setRoles(roles);
 		
 		userRepo.save(user);
 		

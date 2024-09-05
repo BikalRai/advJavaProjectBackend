@@ -10,19 +10,21 @@ public class UserRequestDTO {
 	private String email;
 	private String mobile;
 	private String password;
+	private List<Integer> roleIds;
 
 	public UserRequestDTO() {
 
 	}
 
-	public UserRequestDTO(int id, String firstName, String lastName, String email, String mobile, String password) {
-
-		this.id = id;
+	public UserRequestDTO(int id, String firstName, String lastName, String email, String mobile, String password,
+			List<Integer> roleIds) {
+		
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
 		this.mobile = mobile;
 		this.password = password;
+		this.roleIds = roleIds;
 	}
 
 	public int getId() {
@@ -73,10 +75,20 @@ public class UserRequestDTO {
 		this.password = password;
 	}
 
+	public List<Integer> getRoleIds() {
+		return roleIds;
+	}
+
+	public void setRoleIds(List<Integer> roleIds) {
+		this.roleIds = roleIds;
+	}
+
 	@Override
 	public String toString() {
 		return "UserRequestDTO [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
-				+ ", mobile=" + mobile + ", password=" + password + "]";
+				+ ", mobile=" + mobile + ", password=" + password + ", roleIds=" + roleIds + "]";
 	}
+
+	
 
 }

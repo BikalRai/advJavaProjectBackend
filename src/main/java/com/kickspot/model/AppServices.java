@@ -1,5 +1,9 @@
 package com.kickspot.model;
 
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -16,6 +20,8 @@ public class AppServices {
 	private String description;
 	
 	@Lob
+	@Column(columnDefinition = "bytea")
+	@JdbcTypeCode(SqlTypes.VARBINARY)
 	private byte[] image;
 
 	public int getId() {

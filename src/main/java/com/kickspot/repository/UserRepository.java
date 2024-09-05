@@ -1,6 +1,7 @@
 package com.kickspot.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -20,6 +21,9 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 	
 	@Query(value = "SELECT * FROM users where id = ?1", nativeQuery = true)
 	UserResponseDTO getUserById(int id);
+	
+	Optional<User> findByEmail(String email);
+	Optional<User> findByMobile(String mobile);
 	
 	
 }
