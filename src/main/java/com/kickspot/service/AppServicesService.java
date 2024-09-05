@@ -43,7 +43,21 @@ public class AppServicesService {
 		
 		appService.save(service);
 		
-		return new ResponseEntity<>("Updated service with id: " + appServices.getId(), HttpStatus.OK);
+		return new ResponseEntity<>("Updated service with id: " + service.getId(), HttpStatus.OK);
 		
+	}
+	
+	public ResponseEntity<String> deleteService(int id) {
+		Optional<AppServices> existingService = appService.findById(id);
+		
+		if(!existingService.isPresent()) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		
+		AppServices service = existingService.get();
+		
+		appService.delete(service);
+		
+		return new ResponseEntity<>("Delete service with id: " + service.getId(), HttpStatus.OK);
 	}
 }
