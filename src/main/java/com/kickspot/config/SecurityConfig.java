@@ -24,7 +24,8 @@ public class SecurityConfig{
 					.requestMatchers(HttpMethod.GET, "/**").permitAll()
 					.anyRequest()
 					.authenticated()
-			);
+			
+			).cors();
 		
 		return http.build();
 	}
