@@ -1,5 +1,7 @@
 package com.kickspot.model;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Date;
 
 import jakarta.persistence.Entity;
@@ -11,27 +13,40 @@ import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Booking {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	private String time;
-	private Date bookingDate;
+	private LocalTime startTime;
+	private LocalTime endTime;
+	private LocalDate bookingDate;
 	private long price;
 	private String status;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "venue_id")
 	private Venue venue;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private User user;
-	
-	@ManyToOne
-	private User user_id;
-	
-	
+
+	public Booking() {
+	}
+
+	public Booking(int id, LocalTime startTime, LocalTime endTime, LocalDate bookingDate, long price, String status,
+			Venue venue, User user) {
+
+		this.id = id;
+		this.startTime = startTime;
+		this.endTime = endTime;
+		this.bookingDate = bookingDate;
+		this.price = price;
+		this.status = status;
+		this.venue = venue;
+		this.user = user;
+	}
+
 	public int getId() {
 		return id;
 	}
@@ -40,19 +55,27 @@ public class Booking {
 		this.id = id;
 	}
 
-	public String getTime() {
-		return time;
+	public LocalTime getStartTime() {
+		return startTime;
 	}
 
-	public void setTime(String time) {
-		this.time = time;
+	public void setStartTime(LocalTime startTime) {
+		this.startTime = startTime;
 	}
 
-	public Date getBookingDate() {
+	public LocalTime getEndTime() {
+		return endTime;
+	}
+
+	public void setEndTime(LocalTime endTime) {
+		this.endTime = endTime;
+	}
+
+	public LocalDate getBookingDate() {
 		return bookingDate;
 	}
 
-	public void setBookingDate(Date bookingDate) {
+	public void setBookingDate(LocalDate bookingDate) {
 		this.bookingDate = bookingDate;
 	}
 
@@ -72,14 +95,6 @@ public class Booking {
 		this.status = status;
 	}
 
-	public User getUser_id() {
-		return user_id;
-	}
-
-	public void setUser_id(User user_id) {
-		this.user_id = user_id;
-	}
-
 	public Venue getVenue() {
 		return venue;
 	}
@@ -96,7 +111,12 @@ public class Booking {
 		this.user = user;
 	}
 
+	@Override
+	public String toString() {
+		return "Booking [id=" + id + ", startTime=" + startTime + ", endTime=" + endTime + ", bookingDate="
+				+ bookingDate + ", price=" + price + ", status=" + status + ", venue=" + venue + ", user=" + user + "]";
+	}
+
 	
-	
-	
+
 }
