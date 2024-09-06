@@ -47,9 +47,9 @@ public class VenueRestController {
 	
 	 
     @PostMapping("/{venueId}/timeslots")
-    public List<TimeSlot> getTimeSlotsForDate(@PathVariable int venueId, @RequestParam LocalDate date) {
+    public List<TimeSlot> getTimeSlotsForDate(@PathVariable int venueId) {
         Venue venue = venueService.findById(venueId); 
-//        LocalDate date = LocalDate.now()
+        LocalDate date = LocalDate.now();
         return timeSlotService.generateAndGetTimeSlotForDate(venue, date);
     }
 }

@@ -2,6 +2,9 @@ package com.kickspot.model;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
+
+import com.kickspot.model.booking.Booking;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -9,6 +12,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class TimeSlot {
@@ -21,10 +25,14 @@ public class TimeSlot {
 	private LocalTime endTime; // this will hold the time
 	private boolean available;
 	private long totalPrice;
+	
 
 	@ManyToOne
 	@JoinColumn(name = "venue_id")
 	private Venue venueId;
+	
+	@OneToMany(mappedBy = "timeSlot")
+	private List<Booking> bookingId;
 
 	public int getId() {
 		return id;

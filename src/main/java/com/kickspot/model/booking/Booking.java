@@ -3,6 +3,7 @@ package com.kickspot.model.booking;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+import com.kickspot.model.TimeSlot;
 import com.kickspot.model.User;
 import com.kickspot.model.Venue;
 
@@ -19,11 +20,13 @@ public class Booking {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	private LocalTime startTime;
-	private LocalTime endTime;
 	private LocalDate bookingDate;
 	private long price;
 	private String status;
+
+	@ManyToOne
+	@JoinColumn(name = "time_slot_id")
+	private TimeSlot timeSlot;
 
 	@ManyToOne
 	@JoinColumn(name = "venue_id")
@@ -36,15 +39,14 @@ public class Booking {
 	public Booking() {
 	}
 
-	public Booking(int id, LocalTime startTime, LocalTime endTime, LocalDate bookingDate, long price, String status,
-			Venue venue, User user) {
-
+	public Booking(int id, LocalDate bookingDate, long price, String status, TimeSlot timeSlot, Venue venue,
+			User user) {
+		super();
 		this.id = id;
-		this.startTime = startTime;
-		this.endTime = endTime;
 		this.bookingDate = bookingDate;
 		this.price = price;
 		this.status = status;
+		this.timeSlot = timeSlot;
 		this.venue = venue;
 		this.user = user;
 	}
@@ -57,20 +59,12 @@ public class Booking {
 		this.id = id;
 	}
 
-	public LocalTime getStartTime() {
-		return startTime;
+	public TimeSlot getTimeSlot() {
+		return timeSlot;
 	}
 
-	public void setStartTime(LocalTime startTime) {
-		this.startTime = startTime;
-	}
-
-	public LocalTime getEndTime() {
-		return endTime;
-	}
-
-	public void setEndTime(LocalTime endTime) {
-		this.endTime = endTime;
+	public void setTimeSlot(TimeSlot timeSlot) {
+		this.timeSlot = timeSlot;
 	}
 
 	public LocalDate getBookingDate() {
@@ -115,10 +109,8 @@ public class Booking {
 
 	@Override
 	public String toString() {
-		return "Booking [id=" + id + ", startTime=" + startTime + ", endTime=" + endTime + ", bookingDate="
-				+ bookingDate + ", price=" + price + ", status=" + status + ", venue=" + venue + ", user=" + user + "]";
+		return "Booking [id=" + id + ", bookingDate=" + bookingDate + ", price=" + price + ", status=" + status
+				+ ", timeSlot=" + timeSlot + ", venue=" + venue + ", user=" + user + "]";
 	}
-
-	
 
 }
