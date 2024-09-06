@@ -1,8 +1,10 @@
-package com.kickspot.model;
+package com.kickspot.model.booking;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Date;
+
+import com.kickspot.model.User;
+import com.kickspot.model.Venue;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

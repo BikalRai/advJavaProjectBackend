@@ -3,7 +3,7 @@ package com.kickspot.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.kickspot.model.Booking;
+import com.kickspot.model.booking.Booking;
 
 @Repository
 public interface BookingRepository extends JpaRepository<Booking, Integer> {

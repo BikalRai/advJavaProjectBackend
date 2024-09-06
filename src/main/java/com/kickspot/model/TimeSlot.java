@@ -12,7 +12,7 @@ import jakarta.persistence.ManyToOne;
 
 @Entity
 public class TimeSlot {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
@@ -20,10 +20,11 @@ public class TimeSlot {
 	private LocalTime startTime; // this will hold the time
 	private LocalTime endTime; // this will hold the time
 	private boolean available;
-	
+	private long totalPrice;
+
 	@ManyToOne
 	@JoinColumn(name = "venue_id")
-	private Venue venueTime;
+	private Venue venueId;
 
 	public int getId() {
 		return id;
@@ -65,14 +66,22 @@ public class TimeSlot {
 		this.available = available;
 	}
 
-	public Venue getVenueTime() {
-		return venueTime;
+
+	public Venue getVenueId() {
+		return venueId;
 	}
 
-	public void setVenueTime(Venue venueTime) {
-		this.venueTime = venueTime;
+	public void setVenueId(Venue venueId) {
+		this.venueId = venueId;
 	}
-	
-	
+
+
+	public long getTotalPrice() {
+		return totalPrice;
+	}
+
+	public void setTotalPrice(long totalPrice) {
+		this.totalPrice = totalPrice;
+	}
 
 }

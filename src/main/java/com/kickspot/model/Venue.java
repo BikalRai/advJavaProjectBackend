@@ -1,6 +1,9 @@
 package com.kickspot.model;
 
+import java.time.LocalTime;
 import java.util.List;
+
+import com.kickspot.model.booking.Booking;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -14,7 +17,7 @@ import jakarta.persistence.Table;
 
 @Entity
 public class Venue {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
@@ -25,16 +28,42 @@ public class Venue {
 	private long price;
 	@Lob
 	private byte[] image;
-	
+
+	private LocalTime openingTime;
+	private LocalTime closingTime;
+	private int slotDurationMinutes;
+
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private User owner;
-	
-	@OneToMany(mappedBy = "venueTime")
+
+	@OneToMany(mappedBy = "venueId")
 	List<TimeSlot> timeSlots;
-	
+
 	@OneToMany(mappedBy = "venue")
 	List<Booking> bookings;
+
+	public Venue() {
+	}
+
+	public Venue(int id, String name, String location, String description, String amenities, long price, byte[] image,
+			LocalTime openingTime, LocalTime closingTime, int slotDurationMinutes, User owner, List<TimeSlot> timeSlots,
+			List<Booking> bookings) {
+
+		this.id = id;
+		this.name = name;
+		this.location = location;
+		this.description = description;
+		this.amenities = amenities;
+		this.price = price;
+		this.image = image;
+		this.openingTime = openingTime;
+		this.closingTime = closingTime;
+		this.slotDurationMinutes = slotDurationMinutes;
+		this.owner = owner;
+		this.timeSlots = timeSlots;
+		this.bookings = bookings;
+	}
 
 	public int getId() {
 		return id;
@@ -84,6 +113,38 @@ public class Venue {
 		this.price = price;
 	}
 
+	public byte[] getImage() {
+		return image;
+	}
+
+	public void setImage(byte[] image) {
+		this.image = image;
+	}
+
+	public LocalTime getOpeningTime() {
+		return openingTime;
+	}
+
+	public void setOpeningTime(LocalTime openingTime) {
+		this.openingTime = openingTime;
+	}
+
+	public LocalTime getClosingTime() {
+		return closingTime;
+	}
+
+	public void setClosingTime(LocalTime closingTime) {
+		this.closingTime = closingTime;
+	}
+
+	public int getSlotDurationMinutes() {
+		return slotDurationMinutes;
+	}
+
+	public void setSlotDurationMinutes(int slotDurationMinutes) {
+		this.slotDurationMinutes = slotDurationMinutes;
+	}
+
 	public User getOwner() {
 		return owner;
 	}
@@ -107,16 +168,5 @@ public class Venue {
 	public void setBookings(List<Booking> bookings) {
 		this.bookings = bookings;
 	}
-
-	public byte[] getImage() {
-		return image;
-	}
-
-	public void setImage(byte[] image) {
-		this.image = image;
-	}
-	
-	
-	
 
 }

@@ -2,6 +2,8 @@ package com.kickspot.model;
 
 import java.util.List;
 
+import com.kickspot.model.booking.Booking;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
