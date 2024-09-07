@@ -75,6 +75,10 @@ public class BookingService {
 
 	}
 	
+	public List<Booking> showAllBookings() {
+		return bookingRepo.findAll();
+	}
+	
 	public List<BookingResponseDTO> showUserBookings(int userId) {
 		return bookingRepo.findByUserId(userId);
 	}

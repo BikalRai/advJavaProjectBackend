@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.kickspot.model.booking.Booking;
 import com.kickspot.model.booking.BookingRequestDTO;
 import com.kickspot.model.booking.BookingResponseDTO;
 import com.kickspot.service.BookingService;
@@ -26,6 +27,11 @@ public class BookingRestController {
 	@PostMapping("/create")
 	public ResponseEntity<String> createBooking(@RequestBody BookingRequestDTO bookingReqDto) {
 		return bookingService.createBooking(bookingReqDto);
+	}
+	
+	@GetMapping("/")
+	public List<Booking> getAllBookings() {
+		return bookingService.showAllBookings();
 	}
 	
 	@GetMapping("/{userId}/bookings")
