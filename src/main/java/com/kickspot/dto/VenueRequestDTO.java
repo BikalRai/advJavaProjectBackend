@@ -1,56 +1,39 @@
-package com.kickspot.model;
+package com.kickspot.dto;
 
 import java.time.LocalTime;
-import java.util.Arrays;
 import java.util.List;
 
+import com.kickspot.model.TimeSlot;
+import com.kickspot.model.User;
 import com.kickspot.model.booking.Booking;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
 
-@Entity
-public class Venue {
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+public class VenueRequestDTO {
 	private int id;
 	private String name;
 	private String location;
 	private String description;
 	private String amenities;
 	private long price;
-	@Lob
 	private byte[] image;
 
 	private LocalTime openingTime;
 	private LocalTime closingTime;
 	private int slotDurationMinutes;
 
-	@ManyToOne
-	@JoinColumn(name = "user_id")
-	private User owner;
+	private int ownerId;
 
-	@OneToMany(mappedBy = "venueId")
-	List<TimeSlot> timeSlots;
+	public VenueRequestDTO() {
 
-	@OneToMany(mappedBy = "venue")
-	List<Booking> bookings;
-
-	public Venue() {
 	}
 
-	public Venue(int id, String name, String location, String description, String amenities, long price, byte[] image,
-			LocalTime openingTime, LocalTime closingTime, int slotDurationMinutes, User owner, List<TimeSlot> timeSlots,
-			List<Booking> bookings) {
-
+	public VenueRequestDTO(int id, String name, String location, String description, String amenities, long price,
+			byte[] image, LocalTime openingTime, LocalTime closingTime, int slotDurationMinutes, int ownerId) {
+	
 		this.id = id;
 		this.name = name;
 		this.location = location;
@@ -61,9 +44,7 @@ public class Venue {
 		this.openingTime = openingTime;
 		this.closingTime = closingTime;
 		this.slotDurationMinutes = slotDurationMinutes;
-		this.owner = owner;
-		this.timeSlots = timeSlots;
-		this.bookings = bookings;
+		this.ownerId = ownerId;
 	}
 
 	public int getId() {
@@ -146,37 +127,12 @@ public class Venue {
 		this.slotDurationMinutes = slotDurationMinutes;
 	}
 
-	public User getOwner() {
-		return owner;
+	public int getOwnerId() {
+		return ownerId;
 	}
 
-	public void setOwner(User owner) {
-		this.owner = owner;
-	}
-
-	public List<TimeSlot> getTimeSlots() {
-		return timeSlots;
-	}
-
-	public void setTimeSlots(List<TimeSlot> timeSlots) {
-		this.timeSlots = timeSlots;
-	}
-
-	public List<Booking> getBookings() {
-		return bookings;
-	}
-
-	public void setBookings(List<Booking> bookings) {
-		this.bookings = bookings;
-	}
-
-	@Override
-	public String toString() {
-		return "Venue [id=" + id + ", name=" + name + ", location=" + location + ", description=" + description
-				+ ", amenities=" + amenities + ", price=" + price + ", image=" + Arrays.toString(image)
-				+ ", openingTime=" + openingTime + ", closingTime=" + closingTime + ", slotDurationMinutes="
-				+ slotDurationMinutes + ", owner=" + owner + ", timeSlots=" + timeSlots + ", bookings=" + bookings
-				+ "]";
+	public void setOwnerId(int ownerId) {
+		this.ownerId = ownerId;
 	}
 
 }
