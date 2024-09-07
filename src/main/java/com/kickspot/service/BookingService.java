@@ -1,6 +1,7 @@
 package com.kickspot.service;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import com.kickspot.model.User;
 import com.kickspot.model.Venue;
 import com.kickspot.model.booking.Booking;
 import com.kickspot.model.booking.BookingRequestDTO;
+import com.kickspot.model.booking.BookingResponseDTO;
 import com.kickspot.repository.BookingRepository;
 import com.kickspot.repository.TimeSlotRepository;
 import com.kickspot.repository.UserRepository;
@@ -71,6 +73,10 @@ public class BookingService {
 
 		return new ResponseEntity<>("Booking successfully created", HttpStatus.CREATED);
 
+	}
+	
+	public List<BookingResponseDTO> showUserBookings(int userId) {
+		return bookingRepo.findByUserId(userId);
 	}
 	
 	public ResponseEntity<String> deleteBookingById(int id) {
