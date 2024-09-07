@@ -2,6 +2,8 @@ package com.kickspot.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,5 +22,10 @@ public class BookingRestController {
 	@PostMapping("/create")
 	public ResponseEntity<String> createBooking(@RequestBody BookingRequestDTO bookingReqDto) {
 		return bookingService.createBooking(bookingReqDto);
+	}
+	
+	@DeleteMapping("/delete/{id}")
+	public ResponseEntity<String> deletebooking(@PathVariable("id") int id) {
+		return bookingService.deleteBookingById(id);
 	}
 }
