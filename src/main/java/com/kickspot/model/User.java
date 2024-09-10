@@ -2,6 +2,9 @@ package com.kickspot.model;
 
 import java.util.List;
 
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
+
 import com.kickspot.model.booking.Booking;
 
 import jakarta.persistence.Column;
@@ -11,8 +14,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
@@ -33,6 +36,11 @@ public class User {
 	private String mobile;
 	private String password;
 
+	@Lob
+	@Column(columnDefinition = "bytea")
+	@JdbcTypeCode(SqlTypes.VARBINARY)
+	private byte[] image;
+
 	@ManyToMany
 	@JoinTable(name = "user_roles", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "role_id") })
@@ -40,13 +48,12 @@ public class User {
 
 	@OneToMany(mappedBy = "user")
 	private List<Booking> bookings;
-	
+
 	@OneToMany(mappedBy = "owner")
 	private List<Venue> venues;
-	
+
 	@OneToMany(mappedBy = "uId")
 	private List<Match> matches;
-	
 
 	public int getId() {
 		return id;
@@ -96,6 +103,14 @@ public class User {
 		this.password = password;
 	}
 
+	public byte[] getImage() {
+		return image;
+	}
+
+	public void setImage(byte[] image) {
+		this.image = image;
+	}
+
 	public List<Role> getRoles() {
 		return roles;
 	}
@@ -119,7 +134,13 @@ public class User {
 	public void setVenues(List<Venue> venues) {
 		this.venues = venues;
 	}
-	
-	
+
+	public List<Match> getMatches() {
+		return matches;
+	}
+
+	public void setMatches(List<Match> matches) {
+		this.matches = matches;
+	}
 
 }

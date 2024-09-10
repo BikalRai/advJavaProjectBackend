@@ -1,5 +1,6 @@
 package com.kickspot.dto;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class UserRequestDTO {
@@ -11,20 +12,23 @@ public class UserRequestDTO {
 	private String mobile;
 	private String password;
 	private List<Integer> roleIds;
+	private String image;
 
 	public UserRequestDTO() {
 
 	}
 
 	public UserRequestDTO(int id, String firstName, String lastName, String email, String mobile, String password,
-			List<Integer> roleIds) {
-		
+			List<Integer> roleIds, String image) {
+
+		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
 		this.mobile = mobile;
 		this.password = password;
 		this.roleIds = roleIds;
+		this.image = image;
 	}
 
 	public int getId() {
@@ -83,12 +87,18 @@ public class UserRequestDTO {
 		this.roleIds = roleIds;
 	}
 
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
 	@Override
 	public String toString() {
 		return "UserRequestDTO [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
-				+ ", mobile=" + mobile + ", password=" + password + ", roleIds=" + roleIds + "]";
+				+ ", mobile=" + mobile + ", password=" + password + ", roleIds=" + roleIds + ", image=" + image + "]";
 	}
-
-	
 
 }

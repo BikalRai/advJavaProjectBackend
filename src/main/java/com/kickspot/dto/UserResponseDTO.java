@@ -3,21 +3,19 @@ package com.kickspot.dto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
-@JsonInclude(Include.NON_NULL)
+//@JsonInclude(Include.NON_NULL)
 public interface UserResponseDTO {
-	
 
 	int getId();
 
+	String getFirstName();
 
-	public String getFirstName();
+	String getLastName();
 
-	public String getLastName();
+	String getEmail();
 
-	public String getEmail();
+	String getMobile();
 
-	public String getMobile();
-
-	
+	byte[] getImage();
 
 }
