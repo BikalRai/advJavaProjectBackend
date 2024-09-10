@@ -1,6 +1,7 @@
 package com.kickspot.service;
 
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 
@@ -94,6 +95,9 @@ public class UserService {
 		user.setLastName(userReqDTO.getLastName());
 		user.setEmail(userReqDTO.getEmail());
 		user.setMobile(userReqDTO.getMobile());
+		
+		byte[] imageBytes = Base64.getDecoder().decode(userReqDTO.getImage());
+		user.setImage(imageBytes);
 		
 		if(!(userReqDTO.getPassword() == null) && !userReqDTO.getPassword().isEmpty()) {
 			user.setPassword(passwordEncoder.encode(userReqDTO.getPassword()));
