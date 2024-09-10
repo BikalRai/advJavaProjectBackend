@@ -67,13 +67,20 @@
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		
+
 		<!-- dependency for github secret -->
 		<!--<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-config-server</artifactId>
 			<version>4.1.2</version>
 		</dependency>-->
+
+	 <!--environment dependency-->
+		<dependency>
+			<groupId>io.github.cdimascio</groupId>
+			<artifactId>dotenv-java</artifactId>
+			<version>2.2.0</version>
+		</dependency>
 
 		<!--jwt dependencies-->
 		<dependency>
@@ -94,7 +101,7 @@
 			<version>0.12.6</version>
 		</dependency>
 
-		
+
 	</dependencies>
 
 	<build>

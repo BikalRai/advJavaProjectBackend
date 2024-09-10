@@ -9,6 +9,8 @@ import org.springframework.context.annotation.Bean;
 import com.kickspot.model.Role;
 import com.kickspot.repository.RoleRepository;
 
+import io.github.cdimascio.dotenv.Dotenv;
+
 @SpringBootApplication
 //@EnableConfigServer
 public class KickspotApplication {
@@ -18,6 +20,7 @@ public class KickspotApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(KickspotApplication.class, args);
+		
 	}
 
 	@Bean
