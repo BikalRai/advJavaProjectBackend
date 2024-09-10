@@ -10,6 +10,7 @@ import com.kickspot.model.Role;
 import com.kickspot.repository.RoleRepository;
 
 @SpringBootApplication
+//@EnableConfigServer
 public class KickspotApplication {
 
 	@Autowired
