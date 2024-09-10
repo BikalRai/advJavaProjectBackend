@@ -10,7 +10,5 @@ spring:
       ddl-auto: create-drop
     show-sql: true
 
-secret:
-  key: 9084b7906766700f8ef9384881b51c9c59e3ed0d4920582c16cfcbe20ded9161
     
 
