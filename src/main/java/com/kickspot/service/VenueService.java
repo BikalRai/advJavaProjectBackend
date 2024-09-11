@@ -1,13 +1,13 @@
 package com.kickspot.service;
 
 import java.time.LocalTime;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kickspot.dto.VenueRequestDTO;
-import com.kickspot.model.User;
 import com.kickspot.model.Venue;
 import com.kickspot.repository.UserRepository;
 import com.kickspot.repository.VenueRepository;
@@ -76,13 +76,13 @@ public class VenueService {
 		venue.setImage(venueReqDTO.getImage());
 		venue.setOpeningTime(venueReqDTO.getOpeningTime());
 		venue.setClosingTime(venueReqDTO.getClosingTime());
-		venue.setSlotDurationMinutes(venueReqDTO.getSlotDurationMinutes());
+		venue.setSlotDurationMinutes(60);
 		
 		return venueRepo.save(venue);
 	
 	}
 	
-	public String deleteVenueById(int id, int ownerId) {
+	public String deleteVenueById(int id) {
 		Optional<Venue> existingVenue = venueRepo.findById(id);
 		
 		if(!existingVenue.isPresent()) {
@@ -98,12 +98,16 @@ public class VenueService {
 //		}
 //		
 //		User venueOwner = existingVenueOwner.get();
-		System.out.println(venue.getOwner().getId());
-		if(!(venue.getOwner().getId() == ownerId)) {
-			return "You do not have persmission to delete the venue";
-		}
+//		System.out.println(venue.getOwner().getId());
+//		if(!(venue.getOwner().getId() == ownerId)) {
+//			return "You do not have persmission to delete the venue";
+//		}
 		
 		venueRepo.deleteById(id);
 		return "Deleted venue with id: " + id;
+	}
+	
+	public List<Venue> getAllVenues() {
+		return venueRepo.findAll();
 	}
 }

@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,17 +22,18 @@ import io.jsonwebtoken.security.Keys;
 
 @Component
 public class JwtUtils {
-	
-	 private final String secretKey;
 
-	    @Autowired
-	    public JwtUtils(String jwtSecret) {
-	        this.secretKey = jwtSecret; // jwtSecret is injected here
-	    }
+	private final String secretKey;
 
-	    public String getSecretKey() {
-	        return secretKey;
-	    }
+	@Autowired
+	public JwtUtils(String jwtSecret) {
+		this.secretKey = jwtSecret; // jwtSecret is injected here
+	}
+
+	public String getSecretKey() {
+		return secretKey;
+	}
+
 	public String extractUsername(String token) {
 		return extractClaim(token, Claims::getSubject);
 	}
@@ -46,48 +48,43 @@ public class JwtUtils {
 	}
 
 	public String generateToken(Map<String, Object> claims, UserDetails userDetails) {
-		return Jwts.builder()
-				.setClaims(claims)
-				.setSubject(userDetails.getUsername())
+		claims.put("roles", userDetails.getAuthorities().stream()
+				.map(grantedAuthority -> grantedAuthority.getAuthority())
+				.collect(Collectors.toList()));
+		return Jwts.builder().setClaims(claims).setSubject(userDetails.getUsername())
 				.setIssuedAt(new Date(System.currentTimeMillis()))
 				.setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24)) // 24hours
-				.signWith(getSignInKey(), SignatureAlgorithm.HS256)
-				.compact();
+				.signWith(getSignInKey(), SignatureAlgorithm.HS256).compact();
 
 	}
-	
-	// check to see if the token is valid based on the username extracted from the token and the userdetails that are being used
+
+	// check to see if the token is valid based on the username extracted from the
+	// token and the userdetails that are being used
 	public boolean isTokenValid(String token, UserDetails userDetails) {
 		final String username = extractUsername(token);
-		
+
 		boolean isValid = (username.equals(userDetails.getUsername())) && !isTokenExpired(token);
-		System.out.println("Token validation: Username from token: " + 
-				 username + 
-				 ", UserDetails username: " + 
-				 userDetails.getUsername() + ", Is valid: " + isValid);
-		
+		System.out.println("Token validation: Username from token: " + username + ", UserDetails username: "
+				+ userDetails.getUsername() + ", Is valid: " + isValid);
+
 		return (username.equals(userDetails.getUsername())) && !isTokenExpired(token);
 	}
-	
+
 	private boolean isTokenExpired(String token) {
 		return extractExpiration(token).before(new Date());
 	}
-	
+
 	private Date extractExpiration(String token) {
 		return extractClaim(token, Claims::getExpiration);
 	}
-	
+
 	private Claims extractAllClaims(String token) {
-		return Jwts.parser()
-				.setSigningKey(getSignInKey())
-				.build()
-				.parseClaimsJws(token)
-				.getBody();
+		return Jwts.parser().setSigningKey(getSignInKey()).build().parseClaimsJws(token).getBody();
 	}
-	
+
 	private Key getSignInKey() {
 		byte[] keyBytes = Decoders.BASE64.decode(secretKey);
-		
+
 		return Keys.hmacShaKeyFor(keyBytes);
 	}
 
