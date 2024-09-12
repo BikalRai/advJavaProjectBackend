@@ -26,7 +26,6 @@ public class TimeSlotGeneratorService {
 			slot.setStartTime(currentTime);
 			slot.setEndTime(currentTime.plusMinutes(venue.getSlotDurationMinutes()));
 			slot.setAvailable(true);
-			slot.setTotalPrice(venue.getPrice());
 
 			timeSlots.add(slot);
 			currentTime = currentTime.plusMinutes(venue.getSlotDurationMinutes());

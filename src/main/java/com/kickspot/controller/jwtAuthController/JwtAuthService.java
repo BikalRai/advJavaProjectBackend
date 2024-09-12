@@ -76,7 +76,7 @@ public class JwtAuthService {
 		
 		String token = jwtUtils.generateToken(userDetails);
 		
-		System.out.println("called");
+	
 		
 		return new JwtAuthResponse(token);
 	}

@@ -15,5 +15,7 @@ public interface TimeSlotRepository extends JpaRepository<TimeSlot, Integer> {
 	List<TimeSlot> findByDateAndAvailableTrue(LocalDate date);
 
 	List<TimeSlot> findByVenueIdAndDate(Venue venue, LocalDate date);
+	
+	List<TimeSlot> findByVenueId(Venue venueId);
 
 }
