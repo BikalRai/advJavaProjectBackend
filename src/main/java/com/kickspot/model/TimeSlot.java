@@ -24,13 +24,11 @@ public class TimeSlot {
 	private LocalTime startTime; // this will hold the time
 	private LocalTime endTime; // this will hold the time
 	private boolean available;
-	private long totalPrice;
-	
 
 	@ManyToOne
 	@JoinColumn(name = "venue_id")
 	private Venue venueId;
-	
+
 	@OneToMany(mappedBy = "timeSlot")
 	private List<Booking> bookingId;
 
@@ -74,7 +72,6 @@ public class TimeSlot {
 		this.available = available;
 	}
 
-
 	public Venue getVenueId() {
 		return venueId;
 	}
@@ -83,13 +80,12 @@ public class TimeSlot {
 		this.venueId = venueId;
 	}
 
-
-	public long getTotalPrice() {
-		return totalPrice;
+	public List<Booking> getBookingId() {
+		return bookingId;
 	}
 
-	public void setTotalPrice(long totalPrice) {
-		this.totalPrice = totalPrice;
+	public void setBookingId(List<Booking> bookingId) {
+		this.bookingId = bookingId;
 	}
 
 }

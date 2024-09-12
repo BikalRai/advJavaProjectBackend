@@ -4,9 +4,11 @@ import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.kickspot.model.booking.Booking;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -34,11 +36,12 @@ public class Venue {
 	private LocalTime closingTime;
 	private int slotDurationMinutes;
 
-	@ManyToOne
-	@JoinColumn(name = "user_id")
-	private User owner;
+//	@ManyToOne
+//	@JoinColumn(name = "user_id")
+//	private User owner;
 
 	@OneToMany(mappedBy = "venueId")
+	@JsonIgnore
 	List<TimeSlot> timeSlots;
 
 	@OneToMany(mappedBy = "venue")
@@ -48,7 +51,7 @@ public class Venue {
 	}
 
 	public Venue(int id, String name, String location, String description, String amenities, long price, byte[] image,
-			LocalTime openingTime, LocalTime closingTime, int slotDurationMinutes, User owner, List<TimeSlot> timeSlots,
+			LocalTime openingTime, LocalTime closingTime, int slotDurationMinutes, List<TimeSlot> timeSlots,
 			List<Booking> bookings) {
 
 		this.id = id;
@@ -61,7 +64,7 @@ public class Venue {
 		this.openingTime = openingTime;
 		this.closingTime = closingTime;
 		this.slotDurationMinutes = slotDurationMinutes;
-		this.owner = owner;
+
 		this.timeSlots = timeSlots;
 		this.bookings = bookings;
 	}
@@ -146,14 +149,6 @@ public class Venue {
 		this.slotDurationMinutes = slotDurationMinutes;
 	}
 
-	public User getOwner() {
-		return owner;
-	}
-
-	public void setOwner(User owner) {
-		this.owner = owner;
-	}
-
 	public List<TimeSlot> getTimeSlots() {
 		return timeSlots;
 	}
@@ -175,8 +170,7 @@ public class Venue {
 		return "Venue [id=" + id + ", name=" + name + ", location=" + location + ", description=" + description
 				+ ", amenities=" + amenities + ", price=" + price + ", image=" + Arrays.toString(image)
 				+ ", openingTime=" + openingTime + ", closingTime=" + closingTime + ", slotDurationMinutes="
-				+ slotDurationMinutes + ", owner=" + owner + ", timeSlots=" + timeSlots + ", bookings=" + bookings
-				+ "]";
+				+ slotDurationMinutes + ", timeSlots=" + timeSlots + ", bookings=" + bookings + "]";
 	}
 
 }

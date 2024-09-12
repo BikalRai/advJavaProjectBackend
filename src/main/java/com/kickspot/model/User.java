@@ -49,8 +49,8 @@ public class User {
 	@OneToMany(mappedBy = "user")
 	private List<Booking> bookings;
 
-	@OneToMany(mappedBy = "owner")
-	private List<Venue> venues;
+//	@OneToMany(mappedBy = "owner")
+//	private List<Venue> venues;
 
 	@OneToMany(mappedBy = "uId")
 	private List<Match> matches;
@@ -127,13 +127,7 @@ public class User {
 		this.bookings = bookings;
 	}
 
-	public List<Venue> getVenues() {
-		return venues;
-	}
-
-	public void setVenues(List<Venue> venues) {
-		this.venues = venues;
-	}
+	
 
 	public List<Match> getMatches() {
 		return matches;

@@ -65,5 +65,9 @@ public class TimeSlotService {
 
 	    return slots;
 	}
-//	
+	
+	public List<TimeSlot> getTimeSlotForVenue(Venue Venue) {
+		return timeSlotRepo.findByVenueId(Venue);
+	}
+	
 }

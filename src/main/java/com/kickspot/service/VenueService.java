@@ -47,7 +47,7 @@ public class VenueService {
 		return savedVenue;
 	}
 	
-	public Venue findById(int id) {
+	public Venue getById(int id) {
 		Optional<Venue> existingVenue = venueRepo.findById(id);
 		
 		if(!existingVenue.isPresent()) {
