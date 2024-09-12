@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kickspot.dto.UserRequestDTO;
@@ -34,9 +35,9 @@ public class UserRestController {
 		return userService.getAllUsers();
 	}
 	
-	@GetMapping("/users/{email}")
-	public ResponseEntity<userResponseDTO> getUserByEmail(@RequestBody String email) {
-		return userService.getUserByEmail(email);
+	@GetMapping("/users/mobile")
+	public ResponseEntity<UserResponseDTO> getUserByEmail(@RequestParam("mobile") String mobile) {
+		return ResponseEntity.ok(userService.getUserByMobile(mobile));
 	}
 	
 	@GetMapping("/users/{id}")

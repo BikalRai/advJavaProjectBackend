@@ -72,7 +72,7 @@ public class JwtAuthService {
 		
 		userRepo.save(user);
 		
-		UserDetails userDetails = customUserDetailService.loadUserByUsername(user.getEmail());
+		UserDetails userDetails = customUserDetailService.loadUserByUsername(user.getMobile());
 		
 		String token = jwtUtils.generateToken(userDetails);
 		
