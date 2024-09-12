@@ -34,6 +34,11 @@ public class UserRestController {
 		return userService.getAllUsers();
 	}
 	
+	@GetMapping("/users/{email}")
+	public ResponseEntity<userResponseDTO> getUserByEmail(@RequestBody String email) {
+		return userService.getUserByEmail(email);
+	}
+	
 	@GetMapping("/users/{id}")
 	public ResponseEntity<UserResponseDTO> getUserById(@PathVariable("id")  int id) {
 		return userService.getUserById(id);
