@@ -69,11 +69,14 @@ public class UserService {
 		return new ResponseEntity<>(userRepo.findAllUsers(), HttpStatus.OK);
 	}
 
-	public ResponseEntity<UserResponseDTO> getUserByEmail(String email) {
-		if(userRepo.getUserByEmail(email) == null) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	public UserResponseDTO getUserByMobile(String mobile) {
+		UserResponseDTO userRes = userRepo.getByMobile(mobile);
+		
+		if (userRes == null) {
+			return null;
 		}
-		return ResponseEntity.ok(userRepo.getUserByEmail(email));
+		
+		return userRes;
 	}
 	
 	public ResponseEntity<UserResponseDTO> getUserById(int id) {
