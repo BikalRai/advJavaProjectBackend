@@ -69,6 +69,12 @@ public class UserService {
 		return new ResponseEntity<>(userRepo.findAllUsers(), HttpStatus.OK);
 	}
 
+	public ResponseEntity<UserResponseDTO> getUserByEmail(String email) {
+		if(userRepo.getUserByEmail(email) == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		return ResponseEntity.ok(userRepo.getUserByEmail(email));
+	}
 	
 	public ResponseEntity<UserResponseDTO> getUserById(int id) {
 		
