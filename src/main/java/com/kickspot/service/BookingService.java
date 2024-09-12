@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
 
 import com.kickspot.model.TimeSlot;
@@ -34,6 +35,9 @@ public class BookingService {
 
 	@Autowired
 	private VenueRepository venueRepo;
+	
+	@Autowired
+	private MailService mailService;
 
 	public ResponseEntity<String> createBooking(BookingRequestDTO bookingReqDTO) {
 		Optional<TimeSlot> timeSlotExists = timeSlotRepo.findById(bookingReqDTO.getTimeSlotId());
@@ -59,10 +63,11 @@ public class BookingService {
 			return new ResponseEntity<>("Time slot not available", HttpStatus.BAD_REQUEST);
 		}
 
-		LocalDate date = LocalDate.now();
+		timeSlot.setAvailable(false);
+	
 
 		Booking booking = new Booking();
-		booking.setBookingDate(date);
+		booking.setBookingDate(bookingReqDTO.getBookingDate());
 		booking.setPrice(bookingReqDTO.getPrice());
 		booking.setStatus(bookingReqDTO.getStatus());
 		booking.setUser(user);
@@ -70,6 +75,9 @@ public class BookingService {
 		booking.setVenue(venue);
 
 		bookingRepo.save(booking);
+		
+		mailService.sendBookingConfirmationEmail(user.getEmail(), timeSlot.getStartTime(),
+				timeSlot.getEndTime(), timeSlot.getDate(), venue.getName());
 
 		return new ResponseEntity<>("Booking successfully created", HttpStatus.CREATED);
 

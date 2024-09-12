@@ -5,6 +5,7 @@ import java.util.List;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.kickspot.model.booking.Booking;
 
 import jakarta.persistence.Column;
@@ -44,15 +45,18 @@ public class User {
 	@ManyToMany
 	@JoinTable(name = "user_roles", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "role_id") })
+	@JsonIgnore
 	private List<Role> roles;
 
 	@OneToMany(mappedBy = "user")
+	@JsonIgnore
 	private List<Booking> bookings;
 
 //	@OneToMany(mappedBy = "owner")
 //	private List<Venue> venues;
 
 	@OneToMany(mappedBy = "uId")
+	@JsonIgnore
 	private List<Match> matches;
 
 	public int getId() {

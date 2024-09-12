@@ -75,7 +75,7 @@
 			<version>4.1.2</version>
 		</dependency>-->
 
-	 <!--environment dependency-->
+		<!--environment dependency-->
 		<dependency>
 			<groupId>io.github.cdimascio</groupId>
 			<artifactId>dotenv-java</artifactId>
@@ -99,6 +99,12 @@
 			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt-jackson</artifactId>
 			<version>0.12.6</version>
+		</dependency>
+
+		<!--send mail dependency-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-mail</artifactId>
 		</dependency>
 
 

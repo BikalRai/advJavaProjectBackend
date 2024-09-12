@@ -45,6 +45,7 @@ public class Venue {
 	List<TimeSlot> timeSlots;
 
 	@OneToMany(mappedBy = "venue")
+	@JsonIgnore
 	List<Booking> bookings;
 
 	public Venue() {

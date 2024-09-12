@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.kickspot.model.booking.Booking;
 
 import jakarta.persistence.Entity;
@@ -27,9 +28,11 @@ public class TimeSlot {
 
 	@ManyToOne
 	@JoinColumn(name = "venue_id")
+	@JsonIgnore
 	private Venue venueId;
 
 	@OneToMany(mappedBy = "timeSlot")
+	@JsonIgnore
 	private List<Booking> bookingId;
 
 	public int getId() {
