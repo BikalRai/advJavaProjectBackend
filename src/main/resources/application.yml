@@ -5,6 +5,8 @@ spring:
     url: jdbc:postgresql://localhost:5432/kickspot
     username: postgres
     password: 123456
+    hikari: 
+      auto-commit: false
   jpa:
     hibernate:
       ddl-auto: create-drop

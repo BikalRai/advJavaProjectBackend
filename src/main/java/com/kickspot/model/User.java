@@ -35,6 +35,8 @@ public class User {
 
 	@Column(unique = true)
 	private String mobile;
+	
+	@JsonIgnore
 	private String password;
 
 	@Lob

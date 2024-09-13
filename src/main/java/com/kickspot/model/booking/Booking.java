@@ -22,7 +22,7 @@ public class Booking {
 	private int id;
 	private LocalDate bookingDate;
 	private long price;
-	private String status;
+	private boolean isCompleted;
 
 	@ManyToOne
 	@JoinColumn(name = "time_slot_id")
@@ -39,13 +39,13 @@ public class Booking {
 	public Booking() {
 	}
 
-	public Booking(int id, LocalDate bookingDate, long price, String status, TimeSlot timeSlot, Venue venue,
+	public Booking(int id, LocalDate bookingDate, long price, boolean isCompleted, TimeSlot timeSlot, Venue venue,
 			User user) {
 		super();
 		this.id = id;
 		this.bookingDate = bookingDate;
 		this.price = price;
-		this.status = status;
+		this.isCompleted = isCompleted;
 		this.timeSlot = timeSlot;
 		this.venue = venue;
 		this.user = user;
@@ -83,12 +83,12 @@ public class Booking {
 		this.price = price;
 	}
 
-	public String getStatus() {
-		return status;
+	public boolean isCompleted() {
+		return isCompleted;
 	}
 
-	public void setStatus(String status) {
-		this.status = status;
+	public void setCompleted(boolean isCompleted) {
+		this.isCompleted = isCompleted;
 	}
 
 	public Venue getVenue() {
@@ -109,8 +109,8 @@ public class Booking {
 
 	@Override
 	public String toString() {
-		return "Booking [id=" + id + ", bookingDate=" + bookingDate + ", price=" + price + ", status=" + status
-				+ ", timeSlot=" + timeSlot + ", venue=" + venue + ", user=" + user + "]";
+		return "Booking [id=" + id + ", bookingDate=" + bookingDate + ", price=" + price + ", isCompleted="
+				+ isCompleted + ", timeSlot=" + timeSlot + ", venue=" + venue + ", user=" + user + "]";
 	}
 
 }
