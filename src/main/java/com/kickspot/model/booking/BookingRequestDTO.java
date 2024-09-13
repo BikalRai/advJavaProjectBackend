@@ -8,7 +8,7 @@ public class BookingRequestDTO {
 	private int id;
 	private LocalDate bookingDate;
 	private long price;
-	private String status;
+	private boolean status;
 	private int timeSlotId;
 	private int userId;
 	private int venueId;
@@ -17,7 +17,7 @@ public class BookingRequestDTO {
 
 	}
 
-	public BookingRequestDTO(int id, LocalDate bookingDate, long price, String status, int timeSlotId, int userId,
+	public BookingRequestDTO(int id, LocalDate bookingDate, long price, boolean status, int timeSlotId, int userId,
 			int venueId) {
 
 		this.id = id;
@@ -53,11 +53,11 @@ public class BookingRequestDTO {
 		this.price = price;
 	}
 
-	public String getStatus() {
+	public boolean isStatus() {
 		return status;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(boolean status) {
 		this.status = status;
 	}
 
