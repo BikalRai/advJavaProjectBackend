@@ -15,6 +15,7 @@ import com.kickspot.dto.UserRequestDTO;
 import com.kickspot.dto.UserResponseDTO;
 import com.kickspot.model.Role;
 import com.kickspot.model.User;
+import com.kickspot.repository.BookingRepository;
 import com.kickspot.repository.UserRepository;
 
 @Service
@@ -28,6 +29,9 @@ public class UserService {
 	
 	@Autowired
 	private RoleService roleService;
+	
+	@Autowired
+	private BookingRepository bookingRepo;
 	
 	public ResponseEntity<String> addUser(UserRequestDTO userReqDTO) {
 		if(userRepo.existsByEmail(userReqDTO.getEmail())) {
@@ -126,6 +130,11 @@ public class UserService {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 		User user = existingUser.get();
+		
+		user.getBookings().forEach(booking -> {
+			booking.setUser(null);
+			bookingRepo.save(booking);
+		});;
 		userRepo.delete(user);
 		return new ResponseEntity<>("User deleted with id: " + id, HttpStatus.OK);
 	}
