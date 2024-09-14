@@ -19,28 +19,28 @@ import com.kickspot.dto.UserResponseDTO;
 import com.kickspot.service.UserService;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/users")
 public class UserRestController {
 	
 	@Autowired
 	private UserService userService;
 	
-	@PostMapping("/users")
+	@PostMapping
 	public ResponseEntity<String> addUser(@RequestBody UserRequestDTO userReqDTO) {
 		return userService.addUser(userReqDTO);
 	}
 	
-	@GetMapping("/users")
+	@GetMapping
 	public ResponseEntity<List<UserResponseDTO>> getAllUsers() {
 		return userService.getAllUsers();
 	}
 	
-	@GetMapping("/users/mobile")
+	@GetMapping("/mobile")
 	public ResponseEntity<UserResponseDTO> getUserByEmail(@RequestParam("mobile") String mobile) {
 		return ResponseEntity.ok(userService.getUserByMobile(mobile));
 	}
 	
-	@GetMapping("/users/{id}")
+	@GetMapping("/{id}")
 	public ResponseEntity<UserResponseDTO> getUserById(@PathVariable("id")  int id) {
 		return userService.getUserById(id);
 	}
