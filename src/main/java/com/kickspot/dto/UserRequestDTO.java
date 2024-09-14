@@ -1,6 +1,5 @@
 package com.kickspot.dto;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class UserRequestDTO {
