@@ -38,6 +38,19 @@ public class SecurityConfig{
 			.authorizeHttpRequests(requests -> requests
 					.requestMatchers("/api/v1/auth/**").permitAll()
 					.requestMatchers(HttpMethod.GET, "/api/services/**", "/api/venues/**").permitAll()
+					
+					.requestMatchers(HttpMethod.GET, "/api/users/**").hasAnyRole("USER", "ADMIN")
+					.requestMatchers(HttpMethod.POST, "/api/users/**").hasAnyRole("USER", "ADMIN")
+					.requestMatchers(HttpMethod.PUT, "/api/users/**").hasAnyRole("USER", "ADMIN")
+					.requestMatchers(HttpMethod.DELETE, "/api/users/**").hasRole("ADMIN")
+					
+					.requestMatchers("/api/bookings/**").hasAnyRole("USER", "ADMIN")
+					
+					.requestMatchers(HttpMethod.POST, "/api/venues/{venueId}/timeslots").hasRole("USER")
+					
+					.requestMatchers(HttpMethod.GET, "/api/time/**").hasAnyRole("USER", "ADMIN")
+					
+					
 					.requestMatchers("/**").hasRole("ADMIN")
 					.anyRequest()
 					.authenticated()
