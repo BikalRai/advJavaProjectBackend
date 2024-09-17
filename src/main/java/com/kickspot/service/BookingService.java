@@ -106,6 +106,7 @@ public class BookingService {
 		}
 		
 		Booking booking = existingBooking.get();
+		booking.getTimeSlot().setAvailable(true);
 		bookingRepo.delete(booking);
 		
 		return new ResponseEntity<>("Delete booking with id: " + id, HttpStatus.OK);

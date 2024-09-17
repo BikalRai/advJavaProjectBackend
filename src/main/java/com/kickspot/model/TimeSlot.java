@@ -21,9 +21,9 @@ public class TimeSlot {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	private LocalDate date; // this will hold the date
-	private LocalTime startTime; // this will hold the time
-	private LocalTime endTime; // this will hold the time
+	private LocalDate date; 
+	private LocalTime startTime; 
+	private LocalTime endTime;
 	private boolean available;
 
 	@ManyToOne
