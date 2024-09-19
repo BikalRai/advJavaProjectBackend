@@ -3,6 +3,7 @@ package com.kickspot.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,9 +30,9 @@ public class BookingRestController {
 		return bookingService.createBooking(bookingReqDto);
 	}
 	
-	@GetMapping("/")
-	public List<Booking> getAllBookings() {
-		return bookingService.showAllBookings();
+	@GetMapping
+	public ResponseEntity<List<Booking>> getAllBookings() {
+		return new ResponseEntity<>(bookingService.showAllBookings(), HttpStatus.OK);
 	}
 	
 	@GetMapping("/{userId}/bookings")
