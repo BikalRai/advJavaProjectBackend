@@ -1,5 +1,6 @@
 package com.kickspot.model;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.hibernate.annotations.JdbcTypeCode;
@@ -8,6 +9,7 @@ import org.hibernate.type.SqlTypes;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.kickspot.model.booking.Booking;
 
+import io.micrometer.common.lang.NonNull;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -36,7 +38,7 @@ public class User {
 
 	@Column(unique = true)
 	private String mobile;
-	
+
 	@JsonIgnore
 	private String password;
 
@@ -61,6 +63,16 @@ public class User {
 	@OneToMany(mappedBy = "uId")
 	@JsonIgnore
 	private List<Match> matches;
+
+	@Column(name = "created_date")
+	private LocalDate createdDate;
+	
+	
+
+	public User() {
+	
+		this.createdDate = LocalDate.now();
+	}
 
 	public int getId() {
 		return id;
@@ -134,14 +146,20 @@ public class User {
 		this.bookings = bookings;
 	}
 
-	
-
 	public List<Match> getMatches() {
 		return matches;
 	}
 
 	public void setMatches(List<Match> matches) {
 		this.matches = matches;
+	}
+
+	public LocalDate getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(LocalDate createdDate) {
+		this.createdDate = createdDate;
 	}
 
 }

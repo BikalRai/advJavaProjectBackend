@@ -75,14 +75,16 @@
 			<version>4.1.2</version>
 		</dependency>-->
 
-		<!--environment dependency-->
+		<!--environment
+	dependency-->
 		<dependency>
 			<groupId>io.github.cdimascio</groupId>
 			<artifactId>dotenv-java</artifactId>
 			<version>2.2.0</version>
 		</dependency>
 
-		<!--jwt dependencies-->
+		<!--jwt
+	dependencies-->
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt-api</artifactId>
@@ -101,12 +103,29 @@
 			<version>0.12.6</version>
 		</dependency>
 
-		<!--send mail dependency-->
+		<!--send
+	mail dependency-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-mail</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-logging</artifactId>
+		</dependency>
+
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-logging</artifactId>
+		</dependency>
+
+		<!-- web socket -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-websocket</artifactId>
+		</dependency>
 
 	</dependencies>
 

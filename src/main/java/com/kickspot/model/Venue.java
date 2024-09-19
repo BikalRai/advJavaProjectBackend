@@ -1,5 +1,6 @@
 package com.kickspot.model;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.List;
@@ -8,15 +9,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.kickspot.model.booking.Booking;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
 
 @Entity
 public class Venue {
@@ -48,7 +45,10 @@ public class Venue {
 	@JsonIgnore
 	List<Booking> bookings;
 
+	private LocalDate createdAt;
+
 	public Venue() {
+		this.createdAt = LocalDate.now();
 	}
 
 	public Venue(int id, String name, String location, String description, String amenities, long price, byte[] image,
@@ -166,12 +166,21 @@ public class Venue {
 		this.bookings = bookings;
 	}
 
+	public LocalDate getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(LocalDate createdAt) {
+		this.createdAt = createdAt;
+	}
+
 	@Override
 	public String toString() {
 		return "Venue [id=" + id + ", name=" + name + ", location=" + location + ", description=" + description
 				+ ", amenities=" + amenities + ", price=" + price + ", image=" + Arrays.toString(image)
 				+ ", openingTime=" + openingTime + ", closingTime=" + closingTime + ", slotDurationMinutes="
-				+ slotDurationMinutes + ", timeSlots=" + timeSlots + ", bookings=" + bookings + "]";
+				+ slotDurationMinutes + ", timeSlots=" + timeSlots + ", bookings=" + bookings + ", createdAt="
+				+ createdAt + "]";
 	}
 
 }
