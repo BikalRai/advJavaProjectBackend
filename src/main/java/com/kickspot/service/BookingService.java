@@ -38,7 +38,7 @@ public class BookingService {
 
 	@Autowired
 	private VenueRepository venueRepo;
-	
+
 	@Autowired
 	private MailService mailService;
 
@@ -67,7 +67,6 @@ public class BookingService {
 		}
 
 		timeSlot.setAvailable(false);
-	
 
 		Booking booking = new Booking();
 		booking.setBookingDate(bookingReqDTO.getBookingDate());
@@ -78,38 +77,46 @@ public class BookingService {
 		booking.setVenue(venue);
 
 		bookingRepo.save(booking);
-		
-		mailService.sendBookingConfirmationEmail(user.getEmail(), timeSlot.getStartTime(),
-				timeSlot.getEndTime(), timeSlot.getDate(), venue.getName());
+
+		mailService.sendBookingConfirmationEmail(user.getEmail(), timeSlot.getStartTime(), timeSlot.getEndTime(),
+				timeSlot.getDate(), venue.getName());
 
 		return new ResponseEntity<>("Booking successfully created", HttpStatus.CREATED);
 
 	}
-	
+
 	public List<Booking> showAllBookings() {
 		return bookingRepo.findAll();
 	}
-	
+
 	@Transactional
-    public List<BookingResponseDTO> showUserBookings(int userId) {
-        List<Booking> bookings = bookingRepo.getByUserId(userId);
-        return bookings.stream()
-                .map(BookingResponseDTO::new)
-                .collect(Collectors.toList());
-    }
-	
+	public List<BookingResponseDTO> showUserBookings(int userId) {
+		List<Booking> bookings = bookingRepo.getByUserId(userId);
+		return bookings.stream().map(BookingResponseDTO::new).collect(Collectors.toList());
+	}
+
 	public ResponseEntity<String> deleteBookingById(int id) {
 		Optional<Booking> existingBooking = bookingRepo.findById(id);
-		
-		if(!existingBooking.isPresent()) {
+
+		if (!existingBooking.isPresent()) {
 			return new ResponseEntity<>("Booking not found", HttpStatus.NOT_FOUND);
 		}
-		
+
 		Booking booking = existingBooking.get();
 		booking.getTimeSlot().setAvailable(true);
 		bookingRepo.delete(booking);
-		
+
 		return new ResponseEntity<>("Delete booking with id: " + id, HttpStatus.OK);
+	}
+
+	public Booking getBookingById(int id) {
+		Optional<Booking> bookingExists = bookingRepo.findById(id);
+
+		if (!bookingExists.isPresent()) {
+			return null;
+		}
+		Booking booking = bookingExists.get();
+		return booking;
 	}
 
 }
