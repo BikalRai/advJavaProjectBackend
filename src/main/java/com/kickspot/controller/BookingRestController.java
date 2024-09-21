@@ -35,7 +35,7 @@ public class BookingRestController {
 		return new ResponseEntity<>(bookingService.showAllBookings(), HttpStatus.OK);
 	}
 	
-	@GetMapping("/{userId}/bookings")
+	@GetMapping("/{userId}")
 	public List<BookingResponseDTO> allUserBookings(@PathVariable("userId") int id) {
 		return bookingService.showUserBookings(id);
 	}

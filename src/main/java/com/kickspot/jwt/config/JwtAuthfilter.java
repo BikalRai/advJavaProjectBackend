@@ -12,6 +12,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.kickspot.custom.CustomUserDetailsService;
 
+import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -40,8 +41,19 @@ public class JwtAuthfilter extends OncePerRequestFilter {
 		
 		jwtToken = authHeader.substring(7); // get token from the header after "Bearer "
 		
-		// extract the username from the token
-		username = jwtUtils.extractUsername(jwtToken);
+		try {
+            // Extract the username from the token
+            username = jwtUtils.extractUsername(jwtToken);
+        } catch (ExpiredJwtException e) {
+            // Token has expired, handle the expired token case
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.setHeader("X-Expired-Token", "true"); // Custom header indicating token is expired
+            return;  // Stop further processing
+        } catch (Exception e) {
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.setHeader("X-Invalid-Token", "true"); // Handle invalid token case
+            return;
+        }
 		
 		// authentication null means that the user is not yet authenticated
 		if(username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
