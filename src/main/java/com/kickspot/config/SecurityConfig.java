@@ -38,6 +38,8 @@ public class SecurityConfig{
 			.authorizeHttpRequests(requests -> requests
 					.requestMatchers("/api/v1/auth/**").permitAll()
 					.requestMatchers("/ws/**").permitAll()
+					.requestMatchers("/api/password/**").permitAll()
+					
 					.requestMatchers(HttpMethod.GET, "/api/services/**", "/api/venues/**").permitAll()
 					
 					.requestMatchers(HttpMethod.GET, "/api/users/**").hasAnyRole("USER", "ADMIN")
@@ -51,7 +53,6 @@ public class SecurityConfig{
 					
 					.requestMatchers(HttpMethod.GET, "/api/time/**").hasAnyRole("USER", "ADMIN")
 					.requestMatchers(HttpMethod.GET, "/api/payment/**").hasAnyRole("USER", "ADMIN")
-					.requestMatchers("/api/password/**").hasAnyRole("USER","ADMIN")
 					
 					
 					.requestMatchers("/**").hasRole("ADMIN")

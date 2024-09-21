@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.kickspot.model.User;
 import com.kickspot.model.otp.OtpService;
 import com.kickspot.model.otp.OtpVerificationRequest;
+import com.kickspot.model.password.EmailRequest;
 import com.kickspot.model.password.PasswordReq;
 import com.kickspot.repository.UserRepository;
 import com.kickspot.service.MailService;
@@ -35,17 +36,17 @@ public class PasswordResetResController {
 	private PasswordEncoder passwordEncoder;
 	
 	@PostMapping("/reset-request")
-	public ResponseEntity<?> requestPasswordReset(String email) {
-		Optional<User> user = userRepo.findByEmail(email);
+	public ResponseEntity<?> requestPasswordReset(@RequestBody EmailRequest emailReq) {
+		Optional<User> user = userRepo.findByEmail(emailReq.getEmail());
 		
 		if(!user.isPresent()) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 		
 		String otp = otpService.generateOtp(6);
-		otpService.saveOtp(email, otp);
+		otpService.saveOtp(emailReq.getEmail(), otp);
 		
-		mailService.sendOtp(email, otp);
+		mailService.sendOtp(emailReq.getEmail(), otp);
 		
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
@@ -73,6 +74,8 @@ public class PasswordResetResController {
 		User user = userObj.get();
 		user.setPassword(passwordEncoder.encode(passwordReq.getPassword()));
 		userRepo.save(user);
+		
+		mailService.sendPasswordResetMessage(user.getEmail());
 		
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
