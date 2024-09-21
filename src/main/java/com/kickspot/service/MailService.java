@@ -38,4 +38,22 @@ public class MailService {
 		
 		jms.send(msg);
 	}
+	
+	public void sendOtp(String to, String otp) {
+		SimpleMailMessage msg = new SimpleMailMessage();
+		
+		StringBuilder string = new StringBuilder();
+				string
+				.append("Your OTP to reset your password is:\n")
+				.append(otp + "\n")
+				.append("Please do not share it with anyone\n")
+				.append("It is only valid for 5 minutes");
+				
+		
+		msg.setTo(to);
+		msg.setSubject("KickSpot OTP");
+		msg.setText(string.toString());
+		
+		jms.send(msg);
+	}
 }
