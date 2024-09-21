@@ -25,6 +25,12 @@ public class OtpService {
 	}
 	
 	public void saveOtp(String email, String otp) {
+		Otp existingOtp = otpRepo.findByEmail(email);
+		
+		if(existingOtp != null && existingOtp.getEmail().equals(email)) {
+			otpRepo.delete(existingOtp);
+		}
+		
 		Otp otpObj = new Otp();
 		otpObj.setOtp(otp);
 		otpObj.setEmail(email);
@@ -36,7 +42,12 @@ public class OtpService {
 	public boolean verifyOtp(String email, String otp) {
 		Otp otpObj = otpRepo.findByEmail(email);
 		
-		if(otpObj == null || otpObj.getOtpExpiration().isBefore(LocalDateTime.now())) {
+		if(otpObj == null) {
+			return false;
+		}
+		
+		if(otpObj.getOtpExpiration().isBefore(LocalDateTime.now())) {
+			otpRepo.delete(otpObj);
 			return false;
 		}
 		
